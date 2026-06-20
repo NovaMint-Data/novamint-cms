@@ -15,7 +15,7 @@ export default function SettingsPage() {
     logo_url: '',
     favicon_url: '',
     footer_text: '',
-    social_links: { twitter: '', instagram: '', linkedin: '', youtube: '' },
+    social_links: { payhip: '', creative_fabrica: '', tpt: '', pinterest: '', linkedin: '', email: '' },
     google_analytics_id: '',
     custom_head_code: '',
     robots_txt: '',
@@ -121,13 +121,23 @@ export default function SettingsPage() {
           {activeTab === 'social' && (
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1.5">Twitter / X</label>
-                <input type="url" value={settings.social_links?.twitter || ''} onChange={e => setSocial('twitter', e.target.value)} placeholder="https://x.com/yourbrand"
+                <label className="block text-sm font-medium text-stone-700 mb-1.5">Payhip Store</label>
+                <input type="url" value={settings.social_links?.payhip || ''} onChange={e => setSocial('payhip', e.target.value)} placeholder="https://payhip.com/yourstore"
                   className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-sage-400 focus:outline-none text-stone-700 text-sm" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1.5">Instagram</label>
-                <input type="url" value={settings.social_links?.instagram || ''} onChange={e => setSocial('instagram', e.target.value)} placeholder="https://instagram.com/yourbrand"
+                <label className="block text-sm font-medium text-stone-700 mb-1.5">Creative Fabrica</label>
+                <input type="url" value={settings.social_links?.creative_fabrica || ''} onChange={e => setSocial('creative_fabrica', e.target.value)} placeholder="https://creativefabrica.com/designer/yourstore"
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-sage-400 focus:outline-none text-stone-700 text-sm" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1.5">TPT (Teachers Pay Teachers)</label>
+                <input type="url" value={settings.social_links?.tpt || ''} onChange={e => setSocial('tpt', e.target.value)} placeholder="https://www.teacherspayteachers.com/store/yourstore"
+                  className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-sage-400 focus:outline-none text-stone-700 text-sm" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1.5">Pinterest</label>
+                <input type="url" value={settings.social_links?.pinterest || ''} onChange={e => setSocial('pinterest', e.target.value)} placeholder="https://pinterest.com/yourbrand"
                   className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-sage-400 focus:outline-none text-stone-700 text-sm" />
               </div>
               <div>
@@ -136,8 +146,8 @@ export default function SettingsPage() {
                   className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-sage-400 focus:outline-none text-stone-700 text-sm" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1.5">YouTube</label>
-                <input type="url" value={settings.social_links?.youtube || ''} onChange={e => setSocial('youtube', e.target.value)} placeholder="https://youtube.com/@yourbrand"
+                <label className="block text-sm font-medium text-stone-700 mb-1.5">Email</label>
+                <input type="email" value={settings.social_links?.email || ''} onChange={e => setSocial('email', e.target.value)} placeholder="contact@novamintcreative.com"
                   className="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:border-sage-400 focus:outline-none text-stone-700 text-sm" />
               </div>
             </div>
