@@ -12,11 +12,28 @@ export default function CategoriesPage() {
   const [showForm, setShowForm] = useState(false);
 
   const fetchCategories = () => {
-    fetch('/api/categories').then(r => r.json()).then(data => {
-      setCategories(data || []);
+  fetch('/api/categories')
+    .then(async (r) => {
+      const data = await r.json();
+
+      return Array.isArray(data)
+        ? data
+        : Array.isArray(data?.categories)
+        ? data.categories
+        : Array.isArray(data?.data)
+        ? data.data
+        : [];
+    })
+    .then((categories) => {
+      setCategories(categories);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error('Categories fetch error:', err);
+      setCategories([]);
       setLoading(false);
     });
-  };
+};
 
   useEffect(() => { fetchCategories(); }, []);
 
