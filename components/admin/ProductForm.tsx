@@ -34,8 +34,11 @@ export default function ProductForm({ product, isNew }: ProductFormProps) {
   });
 
   useEffect(() => {
-    fetch('/api/categories').then(r => r.json()).then(setCategories);
-  }, []);
+  fetch('/api/categories')
+    .then(r => r.json())
+    .then(data => setCategories(Array.isArray(data) ? data : (data.categories || data.data || [])))
+    .catch(() => setCategories([]));
+}, []);
 
   const set = (key: string, value: any) => setForm(f => ({ ...f, [key]: value }));
 

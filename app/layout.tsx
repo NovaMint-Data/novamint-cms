@@ -25,7 +25,7 @@ async function getSettings() {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SITE_URL || 'https://novamintcreative.vercel.app'}/api/settings`,
-      { next: { revalidate: 60 } }
+      {  cache: 'no-store' }
     );
     if (!res.ok) return {};
     return res.json();

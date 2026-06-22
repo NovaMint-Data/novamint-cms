@@ -64,7 +64,7 @@ export default function SettingsPage() {
 
       <div className="bg-white rounded-2xl shadow-soft overflow-hidden">
         <div className="flex border-b border-stone-100 overflow-x-auto">
-          {tabs.map((tab) => {
+          {Array.isArray(tabs) && tabs.map((tab) => {
             const Icon = tab.icon;
             return (
               <button key={tab.id} onClick={() => setActiveTab(tab.id as any)}
