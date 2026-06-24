@@ -21,13 +21,14 @@ export function isValidSession(token: string): boolean {
 }
 
 export async function getAdminSession() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
+
   if (!token) return null;
   if (!isValidSession(token)) return null;
+
   return { authenticated: true };
 }
-
 export function isAdminRequest(request: NextRequest): boolean {
   const token = request.cookies.get(COOKIE_NAME)?.value;
   if (!token) return false;
