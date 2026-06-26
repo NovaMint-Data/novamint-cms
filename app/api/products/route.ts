@@ -70,6 +70,14 @@ export async function PUT(request: NextRequest) {
 
   if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
 
+  if (updates.price !== undefined)
+    updates.price = updates.price === '' ? 0 : parseFloat(updates.price) || 0;
+  if (updates.compare_price !== undefined)
+    updates.compare_price = (updates.compare_price === '' || updates.compare_price === null)
+      ? null : parseFloat(updates.compare_price) || null;
+  if (updates.sort_order !== undefined)
+    updates.sort_order = updates.sort_order === '' ? 0 : parseInt(updates.sort_order) || 0;
+
   if (updates.title) {
     updates.slug = updates.slug || createSlug(updates.title);
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';

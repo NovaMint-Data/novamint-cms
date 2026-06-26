@@ -74,10 +74,12 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(product.schema_markup) }}
-      />
+      {product.schema_markup && (
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(product.schema_markup ?? {}) }}
+  />
+)}
       <Header />
 
       <main className="bg-cream min-h-screen">
