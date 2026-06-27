@@ -3,7 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import Header from '@/components/store/Header';
 import Footer from '@/components/store/Footer';
 import ProductCard from '@/components/store/ProductCard';
-import { ArrowRight, Package, Sparkles, Download, Shield, Zap, Newspaper } from 'lucide-react';
+import { ArrowRight, Package, Sparkles, Download, Shield, Zap, Newspaper, CheckCircle2, Infinity, Pencil } from 'lucide-react';
 import { format } from 'date-fns';
 
 export const revalidate = 60;
@@ -23,18 +23,32 @@ export default async function HomePage() {
   settingsRows?.forEach(row => { settings[row.key] = row.value; });
 
   const sections: string[] = settings.homepage_sections || ['hero', 'featured_products', 'categories', 'latest_posts'];
-  const heroTitle    = settings.homepage_hero_title    || 'Elevate Your\nCreative Work';
-  const heroSubtitle = settings.homepage_hero_subtitle || 'Premium digital templates, planners & tools crafted for modern creators and entrepreneurs.';
   const heroImage    = settings.homepage_hero_image;
   const heroBtn      = settings.homepage_hero_button_text || 'Explore Products';
   const heroBtnLink  = settings.homepage_hero_button_link || '/products';
   const productCount = allProducts?.length || 0;
 
-  const trustBadges = [
-    { icon: Download, label: 'Instant Download' },
-    { icon: Shield,   label: 'Secure Payment' },
-    { icon: Zap,      label: 'Ready to Use' },
-    { icon: Sparkles, label: 'Premium Quality' },
+  const benefits = [
+    {
+      icon: Download,
+      title: 'Instant Download',
+      desc: 'Get your files immediately after purchase. No waiting, no shipping — ready to use in seconds.',
+    },
+    {
+      icon: Sparkles,
+      title: 'Premium Quality',
+      desc: 'Every product is carefully designed with attention to detail, aesthetics, and real-world usability.',
+    },
+    {
+      icon: Pencil,
+      title: 'Fully Editable',
+      desc: 'Customize everything in Canva, Excel, Notion, or PDF editors to match your exact needs.',
+    },
+    {
+      icon: Infinity,
+      title: 'Lifetime Access',
+      desc: 'Buy once, use forever. Your downloads are always available — no subscriptions, no expiry.',
+    },
   ];
 
   return (
@@ -44,8 +58,7 @@ export default async function HomePage() {
 
         {/* ── HERO ────────────────────────────────── */}
         {sections.includes('hero') && (
-          <section className="relative bg-hero-gradient noise min-h-[90vh] flex items-center">
-            {/* Decorative blobs */}
+          <section className="relative bg-hero-gradient noise min-h-[88vh] flex items-center">
             <div className="absolute top-20 right-0 w-[600px] h-[600px] rounded-full bg-sage-100/40 blur-3xl -translate-y-1/4 translate-x-1/4 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-parchment blur-3xl translate-y-1/4 -translate-x-1/4 pointer-events-none" />
 
@@ -54,27 +67,34 @@ export default async function HomePage() {
 
                 {/* Left — text */}
                 <div>
-                  {/* Eyebrow */}
                   <div className="inline-flex items-center gap-2 bg-sage-50 border border-sage-100 rounded-full px-4 py-2 mb-6 animate-fade-in-up">
                     <span className="w-2 h-2 rounded-full bg-sage-500 animate-pulse" />
                     <span className="text-xs font-semibold text-sage-700 tracking-wider uppercase">
-                      {settings.site_tagline || 'NovaMint Creative Studio'}
+                      {settings.site_tagline || 'Premium Digital Products'}
                     </span>
                   </div>
 
-                  {/* Headline */}
                   <h1
-                    className="font-display font-bold text-stone-900 leading-[1.05] whitespace-pre-line animate-fade-in-up"
+                    className="font-display font-bold text-stone-900 leading-[1.05] animate-fade-in-up"
                     style={{ fontSize: 'clamp(2.4rem, 5vw, 4rem)', animationDelay: '0.07s' }}
                   >
-                    {heroTitle.split('\n').map((line: string, i: number) => (
-                      <span key={i} className={i === 1 ? 'gradient-text block' : 'block'}>{line}</span>
-                    ))}
+                    <span className="block">Tools & Templates</span>
+                    <span className="gradient-text block">Built for Creators</span>
                   </h1>
 
                   <p className="text-lg text-stone-500 mt-5 max-w-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.14s' }}>
-                    {heroSubtitle}
+                    Download ready-to-use planners, AI tools, and digital templates — designed to save you time and help your work look its best.
                   </p>
+
+                  {/* Trust micro-list */}
+                  <ul className="flex flex-col gap-2 mt-6 animate-fade-in-up" style={{ animationDelay: '0.18s' }}>
+                    {['Instant digital delivery', 'Editable in Canva, Excel & more', 'One-time purchase, lifetime access'].map(item => (
+                      <li key={item} className="flex items-center gap-2 text-sm text-stone-600">
+                        <CheckCircle2 size={15} className="text-sage-500 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
 
                   {/* CTAs */}
                   <div className="flex flex-wrap items-center gap-4 mt-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -119,13 +139,12 @@ export default async function HomePage() {
                       <img src={heroImage} alt="Hero" className="w-full h-auto object-cover" />
                     </div>
                   ) : (
-                    /* Placeholder grid when no hero image */
                     <div className="grid grid-cols-2 gap-4">
                       {[
                         { bg: 'bg-sage-100',   label: 'Canva Templates',    icon: '🎨', delay: '0s' },
                         { bg: 'bg-parchment',  label: 'Budget Planners',    icon: '📊', delay: '0.1s' },
                         { bg: 'bg-stone-100',  label: 'PDF Guides',         icon: '📄', delay: '0.2s' },
-                        { bg: 'bg-sage-50',    label: 'Excel Tools',        icon: '⚡', delay: '0.3s' },
+                        { bg: 'bg-sage-50',    label: 'AI Tools',           icon: '⚡', delay: '0.3s' },
                       ].map((item) => (
                         <div
                           key={item.label}
@@ -138,7 +157,6 @@ export default async function HomePage() {
                       ))}
                     </div>
                   )}
-                  {/* Floating card */}
                   <div className="absolute -bottom-4 -left-4 glass-card rounded-2xl p-4 shadow-card hidden lg:flex items-center gap-3 animate-float" style={{ animationDelay: '0.5s' }}>
                     <div className="w-10 h-10 bg-sage-100 rounded-xl flex items-center justify-center text-xl">✨</div>
                     <div>
@@ -152,11 +170,16 @@ export default async function HomePage() {
           </section>
         )}
 
-        {/* ── TRUST BADGES ──────────────────────── */}
-        <section className="py-8 border-y border-stone-100 bg-white">
+        {/* ── TRUST STRIP ───────────────────────── */}
+        <section className="py-6 border-y border-stone-100 bg-white">
           <div className="max-w-5xl mx-auto px-5 lg:px-8">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {trustBadges.map(({ icon: Icon, label }) => (
+              {[
+                { icon: Download, label: 'Instant Download' },
+                { icon: Shield,   label: 'Secure Payment' },
+                { icon: Zap,      label: 'Ready to Use' },
+                { icon: Sparkles, label: 'Premium Quality' },
+              ].map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center justify-center gap-2.5 py-2">
                   <Icon size={17} className="text-sage-500 flex-shrink-0" />
                   <span className="text-sm font-medium text-stone-600">{label}</span>
@@ -178,11 +201,12 @@ export default async function HomePage() {
                   <h2 className="font-display text-3xl lg:text-4xl font-bold text-stone-900">
                     Best Sellers
                   </h2>
+                  <p className="text-stone-500 mt-2 text-sm">Hand-picked products our customers love most.</p>
                 </div>
                 <Link href="/products"
                   className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-sage-600 hover:text-sage-700 transition-colors"
                 >
-                  View all products <ArrowRight size={14} />
+                  View all <ArrowRight size={14} />
                 </Link>
               </div>
 
@@ -205,16 +229,43 @@ export default async function HomePage() {
           </section>
         )}
 
+        {/* ── WHY NOVAMINT — 4 BENEFITS ─────────── */}
+        <section className="py-20 lg:py-24 bg-parchment">
+          <div className="max-w-6xl mx-auto px-5 lg:px-8">
+            <div className="text-center mb-14">
+              <span className="text-xs font-bold tracking-widest text-sage-600 uppercase">Why NovaMint</span>
+              <h2 className="font-display text-3xl lg:text-4xl font-bold text-stone-900 mt-2">
+                Everything You Need, Nothing You Don't
+              </h2>
+              <p className="text-stone-500 mt-3 max-w-md mx-auto text-sm leading-relaxed">
+                Every product is built with one goal: save your time and make your work look effortlessly good.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {benefits.map(({ icon: Icon, title, desc }) => (
+                <div key={title} className="bg-white rounded-3xl p-7 shadow-soft hover:shadow-card transition-all hover:-translate-y-1 group">
+                  <div className="w-12 h-12 bg-sage-50 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-sage-100 transition-colors">
+                    <Icon size={22} className="text-sage-600" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-display font-bold text-stone-800 text-base mb-2">{title}</h3>
+                  <p className="text-stone-500 text-sm leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── CATEGORIES ────────────────────────── */}
         {sections.includes('categories') && categories && categories.length > 0 && (
-          <section className="py-20 bg-parchment">
+          <section className="py-20 lg:py-28">
             <div className="max-w-6xl mx-auto px-5 lg:px-8">
               <div className="text-center mb-12">
                 <span className="text-xs font-bold tracking-widest text-sage-600 uppercase">Browse</span>
                 <h2 className="font-display text-3xl lg:text-4xl font-bold text-stone-900 mt-2">
                   Shop by Category
                 </h2>
-                <p className="text-stone-500 mt-3 max-w-md mx-auto">
+                <p className="text-stone-500 mt-3 max-w-md mx-auto text-sm">
                   Everything you need to grow, organize, and create — in one place.
                 </p>
               </div>
@@ -234,9 +285,7 @@ export default async function HomePage() {
                       <img
                         src={cat.image_url}
                         alt={cat.name}
-                        className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
-                        style={{ transform: 'scale(1)' }}
-
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center">
@@ -260,32 +309,49 @@ export default async function HomePage() {
           </section>
         )}
 
-        {/* ── WHY US ────────────────────────────── */}
-        <section className="py-20 lg:py-24 bg-sage-gradient">
-          <div className="max-w-5xl mx-auto px-5 lg:px-8 text-center">
-            <span className="text-xs font-bold tracking-widest text-sage-200 uppercase">Why NovaMint</span>
-            <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mt-3 mb-12">
-              Designed to Save You Time
-            </h2>
-            <div className="grid sm:grid-cols-3 gap-6">
-              {[
-                { emoji: '⚡', title: 'Ready in Minutes',     desc: 'Download instantly and start using right away — no waiting, no hassle.' },
-                { emoji: '🎨', title: 'Fully Customizable',   desc: 'Every design is editable. Make it yours in Canva, Notion, or Excel.' },
-                { emoji: '💡', title: 'Creator-Focused',      desc: 'Built by a creator for creators — real needs, real solutions.' },
-              ].map((item) => (
-                <div key={item.title} className="bg-white/10 backdrop-blur-sm rounded-3xl p-7 text-left hover:bg-white/15 transition-colors">
-                  <span className="text-3xl">{item.emoji}</span>
-                  <h3 className="text-white font-display font-semibold text-lg mt-4 mb-2">{item.title}</h3>
-                  <p className="text-sage-100 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
+        {/* ── ABOUT NOVAMINT ────────────────────── */}
+        <section className="py-20 bg-sage-gradient">
+          <div className="max-w-5xl mx-auto px-5 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <span className="text-xs font-bold tracking-widest text-sage-200 uppercase">About NovaMint</span>
+                <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mt-3 mb-5 leading-tight">
+                  Created by a Creator,<br />for Creators
+                </h2>
+                <p className="text-sage-100 leading-relaxed text-sm mb-4">
+                  NovaMint Creative was born from a simple frustration: spending hours creating documents, reports, and templates that should take minutes. So I built the tools I wished existed.
+                </p>
+                <p className="text-sage-100 leading-relaxed text-sm mb-8">
+                  Every product here — from AI-powered report generators to beautifully designed planners — is crafted to solve a real problem and respect your time.
+                </p>
+                <Link
+                  href="/pages/about"
+                  className="inline-flex items-center gap-2 bg-white text-sage-700 font-semibold px-7 py-3.5 rounded-full hover:bg-sage-50 transition-all text-sm"
+                >
+                  Learn more about us <ArrowRight size={14} />
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { emoji: '⚡', title: 'Built for Speed',    desc: 'From download to done in minutes.' },
+                  { emoji: '🎨', title: 'Designed with Care', desc: 'Every pixel placed with purpose.' },
+                  { emoji: '💡', title: 'Practical First',    desc: 'Real tools for real workflows.' },
+                  { emoji: '🌍', title: 'Made for Everyone',  desc: 'English, French & Arabic supported.' },
+                ].map((item) => (
+                  <div key={item.title} className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 hover:bg-white/15 transition-colors">
+                    <span className="text-2xl">{item.emoji}</span>
+                    <h3 className="text-white font-semibold text-sm mt-3 mb-1">{item.title}</h3>
+                    <p className="text-sage-200 text-xs leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* ── LATEST BLOG ───────────────────────── */}
         {sections.includes('latest_posts') && posts && posts.length > 0 && (
-          <section className="py-20 lg:py-28">
+          <section className="py-20 lg:py-28 bg-parchment">
             <div className="max-w-6xl mx-auto px-5 lg:px-8">
               <div className="flex items-end justify-between mb-12">
                 <div>
@@ -339,7 +405,7 @@ export default async function HomePage() {
 
         {/* ── NEWSLETTER ────────────────────────── */}
         {sections.includes('newsletter') && (
-          <section className="py-20 bg-parchment">
+          <section className="py-20 bg-white">
             <div className="max-w-xl mx-auto px-5 text-center">
               <span className="text-2xl mb-4 block">💌</span>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 mb-2">
@@ -348,37 +414,45 @@ export default async function HomePage() {
               <p className="text-stone-500 mb-7 text-sm leading-relaxed">
                 Get new products, exclusive discounts, and creative tips — straight to your inbox.
               </p>
-              <form className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <input
-                  type="email" required placeholder="your@email.com"
-                  className="flex-1 px-5 py-4 rounded-full border border-stone-200 bg-white focus:border-sage-400 focus:outline-none text-sm shadow-soft"
+                  type="email"
+                  placeholder="your@email.com"
+                  className="flex-1 px-5 py-4 rounded-full border border-stone-200 bg-stone-50 focus:border-sage-400 focus:outline-none text-sm shadow-soft"
                 />
                 <button
-                  type="submit"
                   className="bg-sage-gradient text-white font-semibold px-7 py-4 rounded-full shadow-glow hover:shadow-hover transition-all hover:-translate-y-0.5 whitespace-nowrap"
                 >
                   Subscribe Free
                 </button>
-              </form>
+              </div>
               <p className="text-xs text-stone-400 mt-3">No spam. Unsubscribe anytime.</p>
             </div>
           </section>
         )}
 
         {/* ── CTA BAND ──────────────────────────── */}
-        <section className="py-20">
+        <section className="py-20 bg-hero-gradient">
           <div className="max-w-4xl mx-auto px-5 text-center">
-            <h2 className="font-display text-3xl lg:text-4xl font-bold text-stone-900 mb-4">
-              Ready to level up your work?
+            <span className="text-xs font-bold tracking-widest text-sage-600 uppercase">Ready to start?</span>
+            <h2 className="font-display text-3xl lg:text-4xl font-bold text-stone-900 mt-3 mb-4">
+              Find your next favourite tool
             </h2>
-            <p className="text-stone-500 mb-8 max-w-md mx-auto">
-              Explore our full collection of premium digital products — built for creators like you.
+            <p className="text-stone-500 mb-8 max-w-md mx-auto text-sm">
+              Browse our full collection — planners, AI tools, templates, and more. Built for people who value their time.
             </p>
-            <Link href="/products"
-              className="inline-flex items-center gap-2 bg-sage-gradient text-white font-semibold px-9 py-4 rounded-full shadow-glow hover:shadow-hover transition-all hover:-translate-y-0.5 text-base"
-            >
-              Browse All Products <ArrowRight size={16} />
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link href="/products"
+                className="inline-flex items-center gap-2 bg-sage-gradient text-white font-semibold px-9 py-4 rounded-full shadow-glow hover:shadow-hover transition-all hover:-translate-y-0.5 text-base"
+              >
+                Browse All Products <ArrowRight size={16} />
+              </Link>
+              <Link href="/pages/about"
+                className="inline-flex items-center gap-2 border border-stone-200 text-stone-700 font-medium px-7 py-4 rounded-full hover:bg-white transition-all text-sm"
+              >
+                About NovaMint
+              </Link>
+            </div>
           </div>
         </section>
 
