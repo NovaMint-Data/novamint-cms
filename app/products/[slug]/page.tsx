@@ -27,8 +27,9 @@ export async function generateStaticParams() {
   return (data || []).map(p => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const product = await getProduct(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProduct(slug);
   if (!product) return {};
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
   return {
@@ -54,8 +55,9 @@ const FEATURES = [
   'Works on desktop and mobile',
 ];
 
-export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
-  const product = await getProduct(params.slug);
+export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const product = await getProduct(slug);
   if (!product) notFound();
 
   const db = supabaseAdmin();
@@ -75,11 +77,11 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
   return (
     <>
       {product.schema_markup && (
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{ __html: JSON.stringify(product.schema_markup ?? {}) }}
-  />
-)}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(product.schema_markup ?? {}) }}
+        />
+      )}
       <Header />
 
       <main className="bg-cream min-h-screen">

@@ -17,7 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function ProductsPage({ searchParams }: { searchParams: { category?: string } }) {
+export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
+  const { category } = await searchParams;
+
   const db = supabaseAdmin();
 
   const { data: categories } = await db.from('categories').select('*').order('sort_order');
@@ -29,13 +31,13 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
     .order('sort_order')
     .order('created_at', { ascending: false });
 
-  if (searchParams.category) {
-    const cat = categories?.find(c => c.slug === searchParams.category);
+  if (category) {
+    const cat = categories?.find(c => c.slug === category);
     if (cat) query = query.eq('category_id', cat.id);
   }
 
   const { data: products } = await query;
-  const activeCategory = categories?.find(c => c.slug === searchParams.category);
+  const activeCategory = categories?.find(c => c.slug === category);
 
   return (
     <>
@@ -67,7 +69,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
               <Link
                 href="/products"
                 className={`text-sm font-semibold px-5 py-2 rounded-full transition-all ${
-                  !searchParams.category
+                  !category
                     ? 'bg-sage-500 text-white shadow-glow'
                     : 'bg-white text-stone-600 border border-stone-200 hover:border-sage-300 hover:text-sage-600'
                 }`}
@@ -79,7 +81,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
                   key={cat.id}
                   href={`/products?category=${cat.slug}`}
                   className={`text-sm font-semibold px-5 py-2 rounded-full transition-all ${
-                    searchParams.category === cat.slug
+                    category === cat.slug
                       ? 'bg-sage-500 text-white shadow-glow'
                       : 'bg-white text-stone-600 border border-stone-200 hover:border-sage-300 hover:text-sage-600'
                   }`}
@@ -97,7 +99,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
                 <Package size={32} className="text-stone-300" strokeWidth={1} />
               </div>
               <p className="text-stone-500 font-medium">No products found</p>
-              {searchParams.category && (
+              {category && (
                 <Link href="/products" className="text-sm text-sage-600 font-semibold mt-2 inline-block hover:underline">
                   View all products →
                 </Link>

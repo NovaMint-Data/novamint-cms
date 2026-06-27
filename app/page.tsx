@@ -236,8 +236,7 @@ export default async function HomePage() {
                         alt={cat.name}
                         className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                         style={{ transform: 'scale(1)' }}
-                        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.06)')}
-                        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center">
