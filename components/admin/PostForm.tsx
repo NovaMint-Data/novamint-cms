@@ -1,5 +1,5 @@
 'use client';
-
+import RichTextEditor from '@/components/admin/RichTextEditor';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Save, ArrowLeft, Eye, Globe } from 'lucide-react';
@@ -135,15 +135,12 @@ export default function PostForm({ post, isNew }: { post?: any; isNew?: boolean 
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1.5">Content</label>
-                  <textarea value={form.content} onChange={e => set('content', e.target.value)} rows={16}
-                    placeholder="Write your post content here. You can use basic HTML tags like <h2>, <p>, <ul>, <li>, <strong>, <a> for formatting."
-                    className="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-sage-400 focus:outline-none text-stone-700 text-sm resize-none font-mono leading-relaxed"
-                  />
-                  <p className="text-xs text-stone-400 mt-1.5">
-                    Supports HTML tags: &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;/&lt;li&gt;, &lt;strong&gt;, &lt;a href=""&gt;, &lt;img src=""&gt;
-                  </p>
-                </div>
+  <label className="block text-sm font-medium text-stone-700 mb-1.5">Content</label>
+  <RichTextEditor
+    value={form.content}
+    onChange={v => set('content', v)}
+  />
+</div>
               </>
             )}
 

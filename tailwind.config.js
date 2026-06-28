@@ -13,7 +13,7 @@ module.exports = {
           100: '#e0eade',
           200: '#c2d5be',
           300: '#96ba96',
-          400: '#6b9e6e',
+          400: '#091309',
           500: '#4a7c59',
           600: '#3a6347',
           700: '#2d5038',
@@ -69,5 +69,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
