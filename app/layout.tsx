@@ -15,10 +15,13 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: 'NovaMint Creative — Premium Digital Products',
+    default: 'NovaMint Creative – Premium Digital Products',
     template: '%s | NovaMint Creative',
   },
   description: 'Premium digital products for modern creators.',
+  verification: {
+    google: 'c2B2v3TqhlkIsxx4p4bKowBJPI1SsSPfLdsrQT871-A',
+  },
 };
 
 async function getSettings() {
